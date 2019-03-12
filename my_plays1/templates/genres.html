@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>General</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //for-mobile-apps -->
+<link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/static/css/medile.css" rel='stylesheet' type='text/css' />
+<link href="/static/css/single.css" rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="/static/css/contactstyle.css" type="text/css" media="all" />
+<link rel="stylesheet" href="/static/css/faqstyle.css" type="text/css" media="all" />
+<!-- font-awesome icons -->
+<link rel="stylesheet" href="/static/css/font-awesome.min.css" />
+<!-- //font-awesome icons -->
+<!-- news-css -->
+<link rel="stylesheet" href="/static/news-css/news.css" type="text/css" media="all" />
+<!-- //news-css -->
+<!-- list-css -->
+<link rel="stylesheet" href="/static/list-css/list.css" type="text/css" media="all" />
+<!-- //list-css -->
+<!-- js -->
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<!-- //js -->
+<!---<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700italic,700,400italic,300italic,300' rel='stylesheet' type='text/css'>--->
+<!-- start-smoth-scrolling -->
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<script src="/static/js/jquery-1.11.3.js" type="text/javascript"></script>
+<script>
+       $(function (){
+		   	$("a[href='genres?page=1']").css("background","green");
+			var url = location.search;
+			var $a = "a[href='" + url + "']"
+			//alert($a)
+			$($a).css("background","fuchsia");
+			$($a).css("color","white"); 
+			$($a).css("font-size","1.0em");
+            function check_login(){
+                var dic = {
+                    "username": $("#username").val(),
+                }
+                if(!$("#username").val()){
+                    $("#tishi").html('请填写登录名');
+                }else{$.get("{% url 'register'%}", dic, function (resText) {
+                    //resText表示的是响应回来的数据
+                        $("#tishi").html(resText.text);
+                }, 'json');}
+            }
+
+            function q_pwd(){
+                emial = $("#email").val();
+                password = $("#password").val();
+                password2 = $("#password2").val();
+				
+
+                if(email){
+                    $("#tishi2").html("ok");
+                }else{
+                    $("#tishi2").html("请填写邮箱");
+                }
+                if(password){
+                    $("#tishi4").html("ok");
+                }else{
+                    $("#tishi4").html("请填写密码");
+                }
+                if(password == password2 && password2){
+                    $("#tishi5").html("ok");
+                }else if(!password2){
+                    $("#tishi5").html("请填写密码");
+                }else{
+                    $("#tishi5").html("两次密码不一致")
+                }
+            }
+
+            $("#username").blur(check_login);
+            $("#password").change(q_pwd);
+            $("#password2").change(q_pwd);
+            $("#email").change(q_pwd);
+            });
+	
+	//提交form注册表单之前，做判断
+	function verify() {
+        var username = $("#username").val();
+		var email = $("#email").val();
+        var password = $("#password").val();
+        var password2 = $("#password2").val();
+        var dic = {
+                    "username": $("#username").val(),
+                }
+        $.get("{% url 'register'%}", dic, function (resText) {
+            //resText表示的是响应回来的数据
+            if(resText.status == '1'){
+			alert('用户名已存在');
+			return false;
+			}
+        }, 'json');
+
+        if (username == '' || username==null) {
+            alert('请输入用户名');
+            return false;
+        }
+        if(email==''){
+            alert('请输入邮箱');
+            return false;
+        }
+        if(password==''){
+            alert('请输入密码');
+            return false;
+        }
+		if(password2==''){
+			alert('请输入二次密码');
+			return false;
+		}
+		if(password != password2){
+			alert('两次密码输入不一致');
+			return false;
+		}
+		return true;
+    }
+
+</script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(".scroll").click(function(event){		
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+	});
+</script>
+<!-- start-smoth-scrolling -->
+<link href="/static/css/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
+<script src="js/owl.carousel.js"></script>
+<script>
+	$(document).ready(function() { 
+		$("#owl-demo").owlCarousel({
+	 
+		  autoPlay: 3000, //Set AutoPlay to 3 seconds
+	 
+		  items : 5,
+		  itemsDesktop : [640,5],
+		  itemsDesktopSmall : [414,4]
+	 
+		});
+	 
+	}); 
+</script> 
+</head>
+	
+<body>
+<!-- header -->
+	<div class="header">
+		<div class="container">
+			<div class="w3layouts_logo">
+				<a href="/">
+				<h1>My<span>Plays</span></h1></a>
+				
+			</div>
+			<div class="w3_search">
+				<form action="search" method="get">
+				{% csrf_token %}
+					<input type="text" name="Search" placeholder="赵丽颖" required="" value="赵丽颖">
+					<input type="submit" value="搜索">
+				</form>
+			</div>
+			<div class="w3l_sign_in_register">
+				<ul>
+					<li><i class="fa fa-phone" aria-hidden="true"></i>400-212-666</li>
+					<li>
+						<!-- 判断 params.user 是否有数据 -->
+    					{% if not my_user %}
+						<a href="#" data-toggle="modal" data-target="#myModal">登录 & 注册</a>
+						{% else %}
+						<a href="user?id={{my_user.id}}" id="welcome" style="background:white; color:blue;" ><img src={{my_user.img}} id="headimg" style="height:40px;width:40px;" > : {{my_user.username}}</a>						
+						<a id="logout" href="{% url 'logout'%}">退出</a>
+					  	{% endif %}
+					</li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //header -->
+<!-- bootstrap-pop-up -->
+	<div class="modal video-modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					登录 & 注册
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
+				</div>
+				<section>
+					<div class="modal-body">
+						<div class="w3_login_module">
+							<div class="module form-module">
+							  <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+								<div class="tooltip">点我切换</div>
+							  </div>
+							  <div class="form">
+								<h3>登录您的账号</h3>
+								<form action="{% url 'login' %}" method="post">
+									{% csrf_token %}
+								  <input type="text" name="username" placeholder="用户名" required="">
+								  <input type="password" name="password" placeholder="密码" required="">
+								  <!-- 记住密码，选中后，点击再次取消 -->
+								  <input type="radio" name="memary" onclick="if(this.c==1){this.c=0;this.checked=0}else this.c=1" c="0">记住密码
+								  <div id="login_show"></div>
+								  <input type="hidden" name="referer" value="genres" />
+								  <input type="submit" value="登录">
+								</form>
+							  </div>
+							  <div class="form">
+								<h3>申请一个新账号</h3>
+								<form action="{% url 'register' %}" method="post" onsubmit="return verify()">
+									{% csrf_token %}
+								  <p>
+								  <input type="text" name="username" id="username" placeholder="用户名" required=""><b id="tishi">
+								  </p>
+								  <!--
+								  <input type='number' name='age' id="age"  placeholder="年龄" required=""><b id="tishi1">
+								  </p> -->
+								  <p>
+								  <input type="email" name="email" id="email" placeholder="邮箱" required=""><b id="tishi2">
+								  </p>
+								  <!--
+								  <input type="number" name="phone" id="phone"  placeholder="手机号" required=""><b id="tishi3">
+								  </p> -->
+								  <p>
+								  <input type="password" name="password" id="password"  placeholder="密码" required=""><b id="tishi4">
+								  </p>
+								  <p>
+								  <input type="password" name="password2" id="password2"  placeholder="确认密码" required=""><b id="tishi5">
+								  </p>
+								  <div id="register_show"></div>
+								  <input type="hidden" name="referer" value="genres" />
+								  <input type="submit" value="注册">
+								</form>
+							  </div>
+							  <div class="cta"><a href="#">忘记密码?</a></div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+	<script>
+		$('.toggle').click(function(){
+		  // Switches the Icon
+		  $(this).children('i').toggleClass('fa-pencil');
+		  // Switches the forms  
+		  $('.form').animate({
+			height: "toggle",
+			'padding-top': 'toggle',
+			'padding-bottom': 'toggle',
+			opacity: "toggle"
+		  }, "slow");
+		});
+	</script>
+<!-- //bootstrap-pop-up -->
+<!-- nav -->
+	<div class="movies_nav">
+		<div class="container">
+			<nav class="navbar navbar-default">
+				<div class="navbar-header navbar-left">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+					<nav>
+						<ul class="nav navbar-nav">
+							<li ><a href="index">首页</a></li>
+							<li ><a href="genres?page=1">电影</a></li>
+							<li ><a href="series?page=1">电视剧</a></li>
+							<li ><a href="short-codes?page=1">短视频</a></li>
+							<li ><a href="list?page=1">我的视频</a></li>
+						</ul>
+					</nav>
+				</div>
+			</nav>	
+		</div>
+	</div>
+<!-- //nav -->
+<div class="general_social_icons">
+	<nav class="social">
+		<ul>
+			<li class="w3_twitter"><a href="#">Twitter <i class="fa fa-twitter"></i></a></li>
+			<li class="w3_facebook"><a href="#">Facebook <i class="fa fa-facebook"></i></a></li>
+			<li class="w3_dribbble"><a href="#">Dribbble <i class="fa fa-dribbble"></i></a></li>
+			<li class="w3_g_plus"><a href="#">Google+ <i class="fa fa-google-plus"></i></a></li>				  
+		</ul>
+  </nav>
+</div>
+<!-- /w3l-medile-movies-grids -->
+	<div class="general-agileits-w3l">
+		<div class="w3l-medile-movies-grids">
+
+				<!-- /movie-browse-agile -->
+				
+				      <div class="movie-browse-agile">
+					     <!--/browse-agile-w3ls -->
+						<div class="browse-agile-w3ls general-w3ls">
+								<div class="tittle-head">
+									<h4 class="latest-text">电影</h4>
+									<div class="container">
+										<div class="agileits-single-top">
+											<ol class="breadcrumb">
+											  <li><a href="/">首页</a></li>
+											  <li class="active">Genres</li>
+											</ol>
+										</div>
+									</div>
+								</div>
+								     <div class="container">
+							<div class="browse-inner">
+							{% for movie in movies %}
+							   <div class="col-md-2 w3l-movie-gride-agile">
+										 <a href="run?type=movie&id={{movie.id}}&link={{movie.link}}" class="hvr-shutter-out-horizontal" target="_blank" ><img src={{movie.img}} title="album-name" alt=" " />
+									     <div class="w3l-action-icon"><i class="fa fa-play-circle" aria-hidden="true"></i></div>
+									</a>
+									  <div class="mid-1">
+										<div class="w3l-movie-text">
+											<h6><a href="single">{{movie.title}}</a></h6>							
+										</div>
+										<div class="mid-2">
+										
+											<p style="float:left;margin-left:20px;"> 播放: {{movie.count}}</p>
+											<div class="block-stars">
+												<ul class="w3l-ratings">
+													     <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+														 <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+														 <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+														 <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+														 <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+												</ul>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+											
+									</div>
+							 	    <div class="ribben two">
+										<p>{{movie.score}}</p>
+									</div>	
+									</div>
+								{% endfor %}
+							</div>
+
+								
+						</div>
+				<!--//browse-agile-w3ls -->
+						<div class="blog-pagenat-wthree">
+							<ul>
+							{% if movies.has_previous %}
+                    			<li><a  href="?page={{ movies.previous_page_number }}">上一页</a></li>
+                			
+							{% endif %}
+								{% for i in movies.paginator.page_range  %}
+									{# 如果页码=当前页页码 #}
+                
+                    {# 被选中的页码具有高亮效果,阅读bootrap文档得知,对当前li使用active样式 #}
+                    {# {% url 'app:blogs' p %} 点击页码,对第p页的路由发起访问 #}
+                    				<li class="active"><a href="?page={{i}}">{{ i }}</a></li>
+								
+						
+			
+								{% endfor %}
+							{% if movies.has_next %}
+            					<a  href="?page={{ movies.next_page_number }}">下一页</a>
+        					
+							{% endif %}
+							</ul>
+						</div>
+					</div>
+	{# 实现分页标签的代码 #}
+    {# 这里使用 bootstrap 渲染页面 #}
+    <!--<div id="pages" class="text-center" >
+        <nav>
+            <ul class="pagination">
+                <li class="step-links">
+                {% if books.has_previous %}
+                    <a class='active' href="?page={{ books.previous_page_number }}">上一页</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ books.number }} of {{ books.paginator.num_pages }}</span>
+
+                {% if books.has_next %}
+                    <a class='active' href="?page={{ books.next_page_number }}">下一页</a>
+                {% endif %}
+                </li></ul></nav></div>
+-->
+
+				    <!-- //movie-browse-agile -->
+				   <!--body wrapper start-->
+				<!--body wrapper start-->
+					<div class="review-slider">
+						 <h4 class="latest-text">Movie Reviews</h4>
+						       <div class="container">
+						 		<div class="w3_agile_banner_bottom_grid">
+				<div id="owl-demo" class="owl-carousel owl-theme">
+
+			<!--{% for movie in movies %}
+				    <div class="item">
+						<div class="w3l-movie-gride-agile w3l-movie-gride-agile1">
+							<a href={{movie.link}} class="hvr-shutter-out-horizontal"><img src={{movie.img}} title="album-name" class="img-responsive" alt=" " />
+								<div class="w3l-action-icon"><i class="fa fa-play-circle" aria-hidden="true"></i></div>
+							</a>
+							<div class="mid-1 agileits_w3layouts_mid_1_home">
+								<div class="w3l-movie-text">
+									<h6><a href="single">{{movie.title}}</a></h6>							
+								</div>
+								<div class="mid-2 agile_mid_2_home">
+									<p>2016</p>
+									<div class="block-stars">
+										<ul class="w3l-ratings">
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+											<li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+										</ul>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+							<div class="ribben">
+								<p>NEW</p>
+							</div>
+						</div>
+					</div>
+			{% endfor %}-->
+
+				
+			</div>
+						<!--body wrapper end-->
+					</div>	
+			</div>	
+		</div>
+	<!-- //w3l-medile-movies-grids -->
+	</div>
+	<!-- //comedy-w3l-agileits -->
+<!-- footer -->
+	<!-- pop-up-box -->  
+		<script src="/static/js/jquery.magnific-popup.js" type="text/javascript"></script>
+	<!--//pop-up-box -->
+	<div id="small-dialog" class="mfp-hide">
+		<!---<iframe src="https://player.vimeo.com/video/164819130?title=0&byline=0"></iframe>--->
+	</div>
+	<div id="small-dialog1" class="mfp-hide">
+		<!---<iframe src="https://player.vimeo.com/video/148284736"></iframe>--->
+	</div>
+	<div id="small-dialog2" class="mfp-hide">
+		<!---<iframe src="https://player.vimeo.com/video/165197924?color=ffffff&title=0&byline=0&portrait=0"></iframe>--->
+	</div>
+	<script>
+		$(document).ready(function() {
+		$('.w3_play_icon,.w3_play_icon1,.w3_play_icon2').magnificPopup({
+			type: 'inline',
+			fixedContentPos: false,
+			fixedBgPos: true,
+			overflowY: 'auto',
+			closeBtnInside: true,
+			preloader: false,
+			midClick: true,
+			removalDelay: 300,
+			mainClass: 'my-mfp-zoom-in'
+		});
+																		
+		});
+	</script>
+<!-- //Latest-tv-series -->
+<!-- footer -->
+	<div class="footer">
+		<div class="container">
+			<div class="w3ls_footer_grid">
+				<div class="col-md-6 w3ls_footer_grid_left">
+					<div class="w3ls_footer_grid_left1">
+						<h2>订阅我们</h2>
+						<div class="w3ls_footer_grid_left1_pos">
+						  <form action="#" method="post">
+								<input type="email" name="email" placeholder="Your email..." required="">
+							  <input type="submit" value="发送">
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 w3ls_footer_grid_right">
+					<a href="index"><h2>My<span>Plays</span></h2></a>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="col-md-5 w3ls_footer_grid1_left">
+				<p>版权@2018.公司名称版权所有。</p>
+			</div>
+			<div class="col-md-7 w3ls_footer_grid1_right">
+				<ul>
+					<li>
+						<a href="genres">电影</a>
+					</li>
+					<li><a href="faq">常见问题</a>
+					</li>
+					<li>
+						<a href="horror">动作</a>
+					</li>
+					<li>
+						<a href="genres">冒险</a>
+					</li>
+					<li><a href="comedy">喜剧</a>
+					</li>
+					<li>
+						<a href="icons">设计</a>
+					</li>
+					<li>
+						<a href="contact">联系我们</a>
+					</li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+<!-- //footer -->
+<!-- Bootstrap Core JavaScript -->
+<script src="/static/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+            $(this).toggleClass('open');        
+        },
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+            $(this).toggleClass('open');       
+        }
+    );
+});
+</script>
+<!-- //Bootstrap Core JavaScript -->
+<!-- here stars scrolling icon -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			/*
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
+			*/
+								
+			$().UItoTop({ easingType: 'easeOutQuart' });
+								
+			});
+	</script>
+<!-- //here ends scrolling icon -->
+</body>
+</html>
